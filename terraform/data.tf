@@ -6,6 +6,10 @@ data "aws_ssm_parameter" "listener" {
   name = var.ssm_listener
 }
 
+data "aws_ssm_parameter" "alb" {
+  name = var.ssm_alb
+}
+
 data "aws_ssm_parameter" "private_subnet_1a" {
   name = var.ssm_private_subnet_1a
 }

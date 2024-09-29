@@ -58,6 +58,11 @@ variable "ssm_listener" {
   description = "ARN do listener de um Application Load Balancer (ALB), armazenado no AWS SSM, que será usado pelo serviço."
 }
 
+variable "ssm_alb" {
+  type        = string
+  description = ""
+}
+
 variable "ssm_private_subnet_1a" {
 	type        = string
   description = "ID da primeira subnet privada, armazenado no AWS SSM, onde o serviço será implantado."
@@ -83,3 +88,42 @@ variable "capabilities" {
   description = "Lista de capacidades especiais necessárias para o serviço, como 'SYS_ADMIN' para determinados privilégios de sistema."
 }
 
+variable "scale_type" {}
+
+variable "task_minimum" {}
+
+variable "task_maximum" {}
+
+# Autoscaling CPU
+
+variable "scale_out_cpu_threshold" {}
+
+variable "scale_out_adjustment" {}
+
+variable "scale_out_comparison_operator" {}
+
+variable "scale_out_statistic" {}
+
+variable "scale_out_period" {}
+
+variable "scale_out_evaluation_periods" {}
+
+variable "scale_out_cooldown" {}
+
+variable "scale_in_cpu_threshold" {}
+
+variable "scale_in_adjustment" {}
+
+variable "scale_in_comparison_operator" {}
+
+variable "scale_in_statistic" {}
+
+variable "scale_in_period" {}
+
+variable "scale_in_evaluation_periods" {}
+
+variable "scale_in_cooldown" {}
+
+variable "scale_tracking_cpu" {}
+
+variable "scale_tracking_requests" {}
