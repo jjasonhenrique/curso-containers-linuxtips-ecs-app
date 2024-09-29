@@ -20,7 +20,16 @@ service_healthcheck = {
   port                = 8080
 }
 
-service_launch_type = "EC2"
+service_launch_type = [
+  {
+    capacity_provider = "FARGATE"
+    weight            = 50
+  },
+  {
+    capacity_provider = "FARGATE_SPOT"
+    weight            = 50
+  }
+]
 
 service_task_count = 3
 
