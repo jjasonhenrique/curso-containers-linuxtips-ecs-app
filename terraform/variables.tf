@@ -29,35 +29,40 @@ variable "service_memory" {
 }
 
 variable "service_healthcheck" {
-	type        = map(any)
+  type        = map(any)
   description = "Configurações do health check para o serviço, como caminho e protocolo."
 }
 
 variable "service_launch_type" {
-  type        = list(object({
+  type = list(object({
     capacity_provider = string
     weight            = number
   }))
   description = "Tipo de lançamento para o serviço no ECS, como 'FARGATE' ou 'FARGATE_SPOT'."
 }
 
+variable "container_image" {
+  type = string
+  description = "Imagem com tag para deployment da aplicacao no ECS"  
+}
+
 variable "service_task_count" {
-	type        = number
+  type        = number
   description = "Número de tarefas que o serviço deve manter em execução simultaneamente."
 }
 
 variable "service_hosts" {
-	type        = list(string)
+  type        = list(string)
   description = "Lista de endereços ou nomes de host atribuídos ao serviço para balanceamento de carga ou exposição."
 }
 
 variable "ssm_vpc_id" {
-	type        = string
+  type        = string
   description = "ID do VPC armazenado no AWS Systems Manager (SSM) onde o serviço será implantado."
 }
 
 variable "ssm_listener" {
-	type        = string
+  type        = string
   description = "ARN do listener de um Application Load Balancer (ALB), armazenado no AWS SSM, que será usado pelo serviço."
 }
 
@@ -67,27 +72,27 @@ variable "ssm_alb" {
 }
 
 variable "ssm_private_subnet_1a" {
-	type        = string
+  type        = string
   description = "ID da primeira subnet privada, armazenado no AWS SSM, onde o serviço será implantado."
 }
 
 variable "ssm_private_subnet_1b" {
-	type        = string
+  type        = string
   description = "ID da primeira subnet privada, armazenado no AWS SSM, onde o serviço será implantado."
 }
 
 variable "ssm_private_subnet_1c" {
-	type        = string
+  type        = string
   description = "ID da primeira subnet privada, armazenado no AWS SSM, onde o serviço será implantado."
 }
 
 variable "environment_variables" {
-	type        = list(map(string))
+  type        = list(map(string))
   description = "Lista de variáveis de ambiente que serão passadas às tarefas do serviço."
 }
 
 variable "capabilities" {
-	type        = list(string)
+  type        = list(string)
   description = "Lista de capacidades especiais necessárias para o serviço, como 'SYS_ADMIN' para determinados privilégios de sistema."
 }
 
