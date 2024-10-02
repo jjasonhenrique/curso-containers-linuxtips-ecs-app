@@ -42,8 +42,8 @@ variable "service_launch_type" {
 }
 
 variable "container_image" {
-  type = string
-  description = "Imagem com tag para deployment da aplicacao no ECS"  
+  type        = string
+  description = "Imagem com tag para deployment da aplicacao no ECS"
 }
 
 variable "service_task_count" {

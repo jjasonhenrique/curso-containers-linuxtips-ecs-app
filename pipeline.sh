@@ -27,11 +27,11 @@ cd ../terraform
 
 echo "TERRAFORM - FORMAT CHECK"
 
-sudo terraform fmt -recursive -check
+terraform fmt --recursive 
 
 echo "TERRAFORM - VALIDATE"
 
-sudo terraform validate
+terraform validate
 
 
 # Build App
@@ -76,14 +76,28 @@ set -e
 
 echo "BUILD - DOCKER BUILD"
 
-sudo docker build -t $APP_NAME .
-sudo docker tag $APP_NAME:latest $AWS_ACCOUNT.dkr.ecr.us-east-1.amazonaws.com/$REPOSITORY_NAME:$GIT_COMMIT_HASH
-
-echo "BUILD - DOCKER PUBLISH"
-
-sudo docker push $AWS_ACCOUNT.dkr.ecr.us-east-1.amazonaws.com/$REPOSITORY_NAME:$GIT_COMMIT_HASH
-
+docker build -t $APP_NAME .
+docker tag $APP_NAME:latest $AWS_ACCOUNT.dkr.ecr.us-east-1.amazonaws.com/$REPOSITORY_NAME:$GIT_COMMIT_HASH
 
 # Publish App
 
+echo "BUILD - DOCKER PUBLISH"
+
+docker push $AWS_ACCOUNT.dkr.ecr.us-east-1.amazonaws.com/$REPOSITORY_NAME:$GIT_COMMIT_HASH
+
 # Apply Terraform 
+
+cd ../terraform
+
+REPOSITORY_TAG=$AWS_ACCOUNT.dkr.ecr.us-east-1.amazonaws.com/$REPOSITORY_NAME:$GIT_COMMIT_HASH
+
+echo "DEPLOY - TERRAFORM INIT"
+terraform init -backend-config=./environment/dev/backend.tfvars
+
+
+echo "DEPLOY - TERRAFORM PLAN"
+terraform plan -var-file=./environment/dev/terraform.tfvars -var=container_image=$REPOSITORY_TAG
+
+
+echo "DEPLOY - TERRAFORM APPLY"
+terraform apply --auto-approve -var-file=./environment/dev/terraform.tfvars -var=container_image=$REPOSITORY_TAG
