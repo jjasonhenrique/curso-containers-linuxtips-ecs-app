@@ -55,15 +55,15 @@ jobs:
       working-directory: ./terraform
       run: terraform init -backend-config=./environment/${GITHUB_REF_NAME}/backend.tfvars 
       env:
-        AWS_ACCESS_KEY_ID:  ${{ env.AWS_ACCESS_EY_ID }}
-        AWS_SECRET_ACCESS_ID: ${{ env.AWS_SECRET_ACCESS_ID }}
+        AWS_ACCESS_KEY_ID:  ${{ secrets.GITHUB_TOKEN.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.GITHUB_TOKEN.AWS_SECRET_ACCESS_KEY }}
         AWS_REGION:  ${{ env.AWS_REGION }}
       
     - name: Terraform Validate
       working-directory: ./terraform
       env:
-        AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_ID: ${{ secrets.AWS_SECRET_ACCESS_ID }}
+        AWS_ACCESS_KEY_ID:  ${{ secrets.GITHUB_TOKEN.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.GITHUB_TOKEN.AWS_SECRET_ACCESS_KEY }}
         AWS_REGION:  ${{ env.AWS_REGION }}
       run: terraform validate
       
