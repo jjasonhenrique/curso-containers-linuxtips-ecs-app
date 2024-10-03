@@ -10,7 +10,7 @@ env:
   AWS_REGION: "us-east-1"
   APP_NAME: "linuxtips-app"
   CLUSTER_NAME: "containers-linuxtips"
-  REPOSITORY_NAME: "linuxtips/$APP_NAME"
+  REPOSITORY_NAME: "linuxtips/linuxtips-app"
 
 
 jobs:
