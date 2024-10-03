@@ -10,7 +10,7 @@ env:
   AWS_REGION: "us-east-1"
   APP_NAME: "linuxtips-app"
   CLUSTER_NAME: "containers-linuxtips"
-  REPOSITORY_NAME: "linuxtips/linuxtips-app"
+  REPOSITORY_NAME: "linuxtips/$APP_NAME"
 
 
 jobs:
@@ -109,7 +109,7 @@ jobs:
       working-directory: ./app
 
     - name: Publish Image
-      run: docker push t ${{ env.AWS_ACCOUNT }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.REPOSITORY_NAME }}:${GITHUB_SHA::8}
+      run: docker push  ${{ env.AWS_ACCOUNT }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.REPOSITORY_NAME }}:${GITHUB_SHA::8}
       working-directory: ./app
 
     
