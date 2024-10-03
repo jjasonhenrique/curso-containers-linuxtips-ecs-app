@@ -1,6 +1,6 @@
 module "service" {
 
-  source = "git@github.com:jjasonhenrique/curso-containers-linuxtips-module-service.git?ref=v1"
+  source = "github.com/jjasonhenrique/curso-containers-linuxtips-module-service.git?ref=v1"
 
   region = var.region
 
