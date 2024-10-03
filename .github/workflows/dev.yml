@@ -85,7 +85,7 @@ jobs:
         AWS_REGION:  ${{ env.AWS_REGION }}
     
     - name: Build Image
-      run: docker build -t ${APP_NAME} .
+      run: docker build -t ${{ env.APP_NAME }} .
       working-directory: ./app
 
     - name: Create ECR repository if not exists
@@ -105,7 +105,7 @@ jobs:
         AWS_REGION: ${{ env.AWS_REGION }}
 
     - name: Tag Image
-      run: docker tag app:latest ${{ env.AWS_ACCOUNT }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.REPOSITORY_NAME }}:${GITHUB_SHA::8}
+      run: docker tag ${{ env.APP_NAME }}:latest ${{ env.AWS_ACCOUNT }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.REPOSITORY_NAME }}:${GITHUB_SHA::8}
       working-directory: ./app
 
     - name: Publish Image
