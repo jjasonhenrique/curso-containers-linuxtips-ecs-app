@@ -112,6 +112,61 @@ jobs:
       run: docker push  ${{ env.AWS_ACCOUNT }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.REPOSITORY_NAME }}:${GITHUB_SHA::8}
       working-directory: ./app
 
+  deploy:
+    runs-on: ubuntu-latest
+    needs: 
+      - build-publish
+    steps:
+    - name: checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: "1.5.7"
+
+    - name: Terraform Init
+      working-directory: ./terraform
+      run: terraform init -backend-config=./environment/${GITHUB_REF_NAME}/backend.tfvars 
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION:  ${{ env.AWS_REGION }}
+
+    - name: Terraform Plan
+      working-directory: ./terraform
+      run: terraform plan -var-file=./environment/${GITHUB_REF_NAME}/terraform.tfvars -var container_image=${{ env.AWS_ACCOUNT }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.REPOSITORY_NAME }}:${GITHUB_SHA::8}
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION:  ${{ env.AWS_REGION }}
+
+    - name: Terraform Apply
+      working-directory: ./terraform
+      run: terraform --auto-approve -var-file=environment/${GITHUB_REF_NAME}/terraform.tfvars -var container_image=${{ env.AWS_ACCOUNT }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.REPOSITORY_NAME }}:${GITHUB_SHA::8}
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION:  ${{ env.AWS_REGION }}
+  
+  wait-ecs-deploy:
+    runs-on: ubuntu-latest
+    needs:
+      - deploy
+    steps:
+    - name: checkout repository
+      uses: actions/checkout@v4
+
+    - name: ECS Wait Deployment Complete
+      run: aws ecs wait services-stable --cluster ${{ env.CLUSTER_NAME }} --services  ${{ env.APP_NAME }}
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION:  ${{ env.AWS_REGION }}      
+      
+
+    
+
     
 
 
