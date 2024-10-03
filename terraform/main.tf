@@ -1,7 +1,7 @@
 module "service" {
 
-  #source = "git@github.com:jjasonhenrique/curso-containers-linuxtips-module-service.git"
-  source = "../../curso-containers-linuxtips-module-service"
+  source = "git@github.com:jjasonhenrique/curso-containers-linuxtips-module-service.git?ref=v1"
+
   region = var.region
 
   cluster_name = var.cluster_name

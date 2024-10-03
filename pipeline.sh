@@ -3,10 +3,11 @@
 # Setup Inicial
 set -e
 
-AWS_ACCOUNT="640948219319"
+export AWS_ACCOUNT="640948219319"
 export AWS_PAGER=""
 export APP_NAME="linuxtips-app"
 export CLUSTER_NAME="containers-linuxtips"
+export BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
 
 # CI da APP
 
@@ -26,12 +27,13 @@ go test -v ./...
 echo "TERRAFORM - CI"
 cd ../terraform
 
-echo "TERRAFORM - FORMAT CHECK"
+echo "DEPLOY - TERRAFORM INIT"
+terraform init -backend-config=./environment/$BRANCH_NAME/backend.tfvars
 
+echo "TERRAFORM - FORMAT CHECK"
 terraform fmt --recursive 
 
 echo "TERRAFORM - VALIDATE"
-
 terraform validate
 
 
@@ -88,15 +90,11 @@ docker push $AWS_ACCOUNT.dkr.ecr.us-east-1.amazonaws.com/$REPOSITORY_NAME:$GIT_C
 
 # Apply Terraform 
 
-BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
-
 cd ../terraform
 
 REPOSITORY_TAG=$AWS_ACCOUNT.dkr.ecr.us-east-1.amazonaws.com/$REPOSITORY_NAME:$GIT_COMMIT_HASH
 
-echo "DEPLOY - TERRAFORM INIT"
-terraform init -backend-config=./environment/$BRANCH_NAME/backend.tfvars
-
+CLUSTER_NAME="containers-linuxtips"
 
 echo "DEPLOY - TERRAFORM PLAN"
 terraform plan -var-file=./environment/$BRANCH_NAME/terraform.tfvars -var=container_image=$REPOSITORY_TAG
@@ -107,4 +105,4 @@ terraform apply --auto-approve -var-file=./environment/$BRANCH_NAME/terraform.tf
 
 
 echo "DEPLOY - WAIT DEPLOY"
-aws ecs wait services-stable --cluster $CLUSTER_NAME --services $APP_NAME
+aws ecs wait services-stable --profile blog --cluster $CLUSTER_NAME --services $APP_NAME
