@@ -143,7 +143,7 @@ jobs:
 
     - name: Terraform Apply
       working-directory: ./terraform
-      run: terraform --auto-approve -var-file=environment/${GITHUB_REF_NAME}/terraform.tfvars -var container_image=${{ env.AWS_ACCOUNT }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.REPOSITORY_NAME }}:${GITHUB_SHA::8}
+      run: terraform apply --auto-approve -var-file=environment/${GITHUB_REF_NAME}/terraform.tfvars -var container_image=${{ env.AWS_ACCOUNT }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.REPOSITORY_NAME }}:${GITHUB_SHA::8}
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
