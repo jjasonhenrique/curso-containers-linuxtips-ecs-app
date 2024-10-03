@@ -52,12 +52,13 @@ jobs:
       working_directory: ./terraform
 
     - name: Terraform Init
+      run: terraform init -backend-config=./environment/${GITHUB_HEAD_REF}/backend.tfvars
+      working_directory: ./terraform
       env:
         AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_ID: ${{ secrets.AWS_SECRET_ACCESS_ID }}
         AWS_REGION:  ${{ env.AWS_REGION }}
-      run: terraform init -backend-config=./environment/${GITHUB_HEAD_REF}/backend.tfvars
-      working_directory: ./terraform
+      
 
     - name: Terraform Validate
       env:
