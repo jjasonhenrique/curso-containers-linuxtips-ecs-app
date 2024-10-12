@@ -1,8 +1,8 @@
 module "service" {
 
-  #source = "github.com/jjasonhenrique/curso-containers-linuxtips-module-service.git?ref=v1.1.0"
+  source = "github.com/jjasonhenrique/curso-containers-linuxtips-module-service.git?ref=v1.2.0"
 
-  source = "../../curso-containers-linuxtips-module-service"
+  #source = "../../curso-containers-linuxtips-module-service"
 
   region = var.region
 
@@ -25,6 +25,10 @@ module "service" {
     {
       name      = "VARIAVEL_COM_VALOR_DO_SSM"
       valueFrom = aws_ssm_parameter.teste.arn
+    },
+    {
+      name      = "VARIAVEL_COM_VALOR_DO_SECRET_MANAGER"
+      valueFrom = aws_secretsmanager_secret.teste.arn
     }
   ]
 

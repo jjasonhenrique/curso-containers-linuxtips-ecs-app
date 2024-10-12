@@ -9,6 +9,17 @@ export APP_NAME="linuxtips-app"
 export CLUSTER_NAME="containers-linuxtips"
 export BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
 
+# Update Documentacao
+
+echo "Update Documentacao"
+
+cd terraform/
+
+go install github.com/terraform-docs/terraform-docs@v0.19.0
+terraform-docs markdown . --output-file ../README.md
+
+cd ..
+
 # CI da APP
 
 echo "APP - CI"
