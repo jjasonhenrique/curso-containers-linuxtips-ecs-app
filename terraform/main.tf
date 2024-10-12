@@ -1,8 +1,8 @@
 module "service" {
 
-  source = "github.com/jjasonhenrique/curso-containers-linuxtips-module-service.git?ref=v1.1.0"
+  #source = "github.com/jjasonhenrique/curso-containers-linuxtips-module-service.git?ref=v1.1.0"
 
-  #source = "../../curso-containers-linuxtips-module-service"
+  source = "../../curso-containers-linuxtips-module-service"
 
   region = var.region
 
@@ -20,7 +20,15 @@ module "service" {
   service_hosts               = var.service_hosts
 
   environment_variables = var.environment_variables
-  capabilities          = var.capabilities
+
+  secrets = [
+    {
+      name      = "VARIAVEL_COM_VALOR_DO_SSM"
+      valueFrom = aws_ssm_parameter.teste.arn
+    }
+  ]
+
+  capabilities = var.capabilities
 
   vpc_id = data.aws_ssm_parameter.vpc_id.value
   private_subnets = [
