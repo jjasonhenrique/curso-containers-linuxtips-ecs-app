@@ -14,8 +14,28 @@ env:
 
 
 jobs:
+  terraform-docs:
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup Golang
+      uses: actions/setup-go@v5
+      with:
+        go-version: '1.23'
+      
+    - name: Install terraform-docs
+      run: go install github.com/terraform-docs/terraform-docs@v0.19.0
+
+    - name: Update README
+      run: terraform-docs markdown . --output-file ../README.md
+      working-directory: ./terraform
+
   ci-app:
     runs-on: ubuntu-latest
+    needs:
+      - terraform-docs
     steps:
     - name: checkout repository
       uses: actions/checkout@v4
@@ -38,6 +58,8 @@ jobs:
   
   ci-terraform:
     runs-on: ubuntu-latest
+    needs:
+      - terraform-docs
     steps:
     - name: checkout repository
       uses: actions/checkout@v4
