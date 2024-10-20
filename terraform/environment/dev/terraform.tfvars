@@ -34,14 +34,15 @@ service_launch_type = [
 service_task_count = 3
 
 service_hosts = [
-  "app.linuxtips.demo"
+  #"app.linuxtips.demo"
+  "app.containers-linuxtips.internal.com"
 ]
 
 ssm_vpc_id = "/containers-linuxtips/vpc/vpc_id"
 
-ssm_listener = "/containers-linuxtips/ecs/listener/id"
+ssm_listener = "/containers-linuxtips/ecs/listener/internal/id"
 
-ssm_alb = "/containers-linuxtips/ecs/lb/id"
+ssm_alb = "/containers-linuxtips/ecs/lb/internal/id"
 
 ssm_private_subnet_1a = "/containers-linuxtips/vpc/subnet_private_1a"
 
@@ -88,3 +89,5 @@ scale_in_cooldown            = 60
 scale_tracking_cpu = 50
 
 scale_tracking_requests = 30
+
+ssm_service_discovery_namespace = "/containers-linuxtips/ecs/cloudmap/namespace"

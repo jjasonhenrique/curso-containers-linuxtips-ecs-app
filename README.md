@@ -26,8 +26,8 @@ No requirements.
 | [aws_efs_mount_target.mount_1c](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/efs_mount_target) | resource |
 | [aws_iam_role.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
 | [aws_iam_role_policy.ecs_task_execution_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy) | resource |
-| [aws_secretsmanager_secret.teste](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/secretsmanager_secret) | resource |
-| [aws_secretsmanager_secret_version.teste](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/secretsmanager_secret_version) | resource |
+| [aws_secretsmanager_secret.teste2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/secretsmanager_secret) | resource |
+| [aws_secretsmanager_secret_version.teste2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/secretsmanager_secret_version) | resource |
 | [aws_security_group.efs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group) | resource |
 | [aws_ssm_parameter.teste](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssm_parameter) | resource |
 | [aws_ssm_parameter.alb](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ssm_parameter) | data source |
@@ -35,6 +35,7 @@ No requirements.
 | [aws_ssm_parameter.private_subnet_1a](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ssm_parameter) | data source |
 | [aws_ssm_parameter.private_subnet_1b](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ssm_parameter) | data source |
 | [aws_ssm_parameter.private_subnet_1c](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ssm_parameter) | data source |
+| [aws_ssm_parameter.service_discovery_namespace](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ssm_parameter) | data source |
 | [aws_ssm_parameter.vpc_id](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ssm_parameter) | data source |
 
 ## Inputs
@@ -76,6 +77,7 @@ No requirements.
 | <a name="input_ssm_private_subnet_1a"></a> [ssm\_private\_subnet\_1a](#input\_ssm\_private\_subnet\_1a) | ID da primeira subnet privada, armazenado no AWS SSM, onde o serviço será implantado. | `string` | n/a | yes |
 | <a name="input_ssm_private_subnet_1b"></a> [ssm\_private\_subnet\_1b](#input\_ssm\_private\_subnet\_1b) | ID da primeira subnet privada, armazenado no AWS SSM, onde o serviço será implantado. | `string` | n/a | yes |
 | <a name="input_ssm_private_subnet_1c"></a> [ssm\_private\_subnet\_1c](#input\_ssm\_private\_subnet\_1c) | ID da primeira subnet privada, armazenado no AWS SSM, onde o serviço será implantado. | `string` | n/a | yes |
+| <a name="input_ssm_service_discovery_namespace"></a> [ssm\_service\_discovery\_namespace](#input\_ssm\_service\_discovery\_namespace) | n/a | `any` | n/a | yes |
 | <a name="input_ssm_vpc_id"></a> [ssm\_vpc\_id](#input\_ssm\_vpc\_id) | ID do VPC armazenado no AWS Systems Manager (SSM) onde o serviço será implantado. | `string` | n/a | yes |
 | <a name="input_task_maximum"></a> [task\_maximum](#input\_task\_maximum) | n/a | `any` | n/a | yes |
 | <a name="input_task_minimum"></a> [task\_minimum](#input\_task\_minimum) | n/a | `any` | n/a | yes |

@@ -1,6 +1,6 @@
 module "service" {
 
-  source = "github.com/jjasonhenrique/curso-containers-linuxtips-module-service.git?ref=v1.2.0"
+  source = "github.com/jjasonhenrique/curso-containers-linuxtips-module-service.git?ref=v1.3.0"
 
   #source = "../../curso-containers-linuxtips-module-service"
 
@@ -28,7 +28,7 @@ module "service" {
     },
     {
       name      = "VARIAVEL_COM_VALOR_DO_SECRET_MANAGER"
-      valueFrom = aws_secretsmanager_secret.teste.arn
+      valueFrom = aws_secretsmanager_secret.teste2.arn
     }
   ]
 
@@ -78,4 +78,8 @@ module "service" {
   alb_arn                 = data.aws_ssm_parameter.alb.value
 
   container_image = var.container_image
+
+  # Service Discovery
+
+  service_discovery_namespace = data.aws_ssm_parameter.service_discovery_namespace.value
 }
