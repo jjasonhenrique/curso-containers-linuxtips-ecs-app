@@ -21,3 +21,7 @@ data "aws_ssm_parameter" "private_subnet_1b" {
 data "aws_ssm_parameter" "private_subnet_1c" {
   name = var.ssm_private_subnet_1c
 }
+
+data "aws_ssm_parameter" "service_discovery_namespace" {
+  name = var.ssm_service_discovery_namespace
+}
